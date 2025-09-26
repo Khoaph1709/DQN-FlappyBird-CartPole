@@ -29,7 +29,7 @@ FlappyBird-testing:
   stop_on_reward: 100000
   fc1_nodes: 512
   env_make_params:
-    use_lidar: true
+    use_lidar: false 
   enable_double_dqn: True
   enable_dueling_dqn: True
   tau: 0.005
