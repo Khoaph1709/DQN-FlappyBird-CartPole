@@ -24,6 +24,8 @@ DATE_FORMAT = "%d-%m %H:%M:%S"
 
 RUNS_DIR = "runs"
 os.makedirs(RUNS_DIR, exist_ok=True)
+# DRIVE_FOLDER_PATH = "/content/drive/MyDrive/FlappyBird_DQN"
+# os.makedirs(DRIVE_FOLDER_PATH, exist_ok=True)
 
 matplotlib.use("Agg")
 
@@ -35,9 +37,6 @@ class Agent:
             all_hyperparameter_sets = yaml.safe_load(f)
             hyperparameters = all_hyperparameter_sets[hyperparameter_set]
         self.hyperparameter_set = hyperparameter_set
-
-        # DRIVE_FOLDER_PATH = "/content/drive/MyDrive/FlappyBird_DQN"
-        # os.makedirs(DRIVE_FOLDER_PATH, exist_ok=True)
         
         self.env_id = hyperparameters['env_id']
         self.learning_rate_a = hyperparameters['learning_rate_a']
@@ -77,7 +76,6 @@ class Agent:
         env = gym.make(self.env_id, render_mode="human" if render else None, **self.env_make_params)
 
         clock = pygame.time.Clock() if render else None
-        # clock = pygame.time.Clock() if render else None
 
         num_states = env.observation_space.shape[0]
         num_actions = env.action_space.n
@@ -86,6 +84,7 @@ class Agent:
 
         policy_dqn = DQN(num_states, num_actions, self.fc1_nodes).to(device)
 
+        start_episode = 0
         if is_training:
             epsilon = self.epsilon_init
             memory = ReplayMemory(self.replay_memory_size)
@@ -95,14 +94,27 @@ class Agent:
 
             self.optimizer = torch.optim.Adam(policy_dqn.parameters(), lr=self.learning_rate_a)
 
+            if os.path.exists(self.MODEL_FILE):
+                print("Found existing checkpoint. Resuming training...")
+                checkpoint = torch.load(self.MODEL_FILE)
+                policy_dqn.load_state_dict(checkpoint['model_state_dict'])
+                target_dqn.load_state_dict(checkpoint['model_state_dict'])
+                self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+                start_episode = checkpoint['episode'] + 1
+                epsilon = checkpoint['epsilon']
+                print(f"Resuming from episode {start_episode}.")
+
             epsilon_history = []
 
             step_count = 0
 
             best_reward = -9999999
         else:
-            policy_dqn.load_state_dict(torch.load(self.MODEL_FILE))
+            checkpoint = torch.load(self.MODEL_FILE)
+            policy_dqn.load_state_dict(checkpoint['model_state_dict'])
             policy_dqn.eval()
+            # policy_dqn.load_state_dict(torch.load(self.MODEL_FILE)) 
+            # policy_dqn.eval()
         
         initial_state, _ = env.reset()
         sample_input = torch.tensor(initial_state, dtype=torch.float, device=device).unsqueeze(dim=0)
@@ -110,7 +122,7 @@ class Agent:
         print("Model graph saved.")
 
         running = True
-        episode = 0
+        episode = start_episode
         while running:
             state, _ = env.reset()
             state = torch.tensor(state, dtype=torch.float, device=device)
@@ -166,7 +178,14 @@ class Agent:
                     print(log_message)
                     with open(self.LOG_FILE, 'a') as f:
                         f.write(log_message + "\n")
-                    torch.save(policy_dqn.state_dict(), self.MODEL_FILE)
+                    
+                    checkpoint = {
+                        'episode': episode,
+                        'model_state_dict': policy_dqn.state_dict(),
+                        'optimizer_state_dict': self.optimizer.state_dict(),
+                        'epsilon': epsilon
+                    }
+                    torch.save(checkpoint, self.MODEL_FILE)
                     best_reward = episode_reward
                 
                 current_time = datetime.now()
