@@ -74,7 +74,7 @@ Dự án sử dụng mạng nơ-ron sâu để xấp xỉ hàm **Q-function** $Q
 Thay vì dùng một bảng Q-table (bất khả thi với không gian trạng thái lớn), DQN sử dụng một mạng nơ-ron để học hàm $Q(s, a; \theta)$ với $\theta$ là trọng số của mạng. Mạng này được huấn luyện bằng cách tối thiểu hóa sai số (Mean Squared Error) giữa giá trị Q dự đoán và giá trị Q mục tiêu.
 
 > **Phương trình Bellman (cốt lõi):**
-> $$Q^*(s, a) = \mathbb{E}_{s' \sim \mathcal{E}} [r + \gamma \max_{a'} Q^*(s', a') | s, a]$$
+> $$Q^*(s, a) = \mathbb{E}_{s' \sim \mathcal{E}} [r + \gamma \max_{a'} Q^*(s', a') \mid s, a]$$
 > Trong đó $\gamma$ là yếu tố chiết khấu, quyết định tầm quan trọng của phần thưởng tương lai.
 
 ### Cải tiến 1: Double DQN
