@@ -74,7 +74,9 @@ Dự án sử dụng mạng nơ-ron sâu để xấp xỉ hàm **Q-function** $Q
 Thay vì dùng một bảng Q-table (bất khả thi với không gian trạng thái lớn), DQN sử dụng một mạng nơ-ron để học hàm $\displaystyle Q(s, a; \theta)$ với $\theta$ là trọng số của mạng. Mạng này được huấn luyện bằng cách tối thiểu hóa sai số (Mean Squared Error) giữa giá trị Q dự đoán và giá trị Q mục tiêu.
 
 > **Phương trình Bellman (cốt lõi):**
-$$\displaystyle Q^{\*}(s, a) = \mathbb{E}_{s' \sim \mathcal{E}} [r + \gamma \max_{a'} Q^{\*}(s', a') \mid s, a]$$
+
+$$\displaystyle Q^{\*}(s, a) = \mathbb{E}_{s' \sim \mathcal{E}} [r + \gamma \max_{a'} Q^{\*}(s', a') \mid s, a].$$
+
 > Trong đó $\gamma$ là yếu tố chiết khấu, quyết định tầm quan trọng của phần thưởng tương lai.
 
 ### Cải tiến 1: Double DQN
@@ -84,7 +86,8 @@ DQN tiêu chuẩn có xu hướng đánh giá quá cao (overestimate) Q-values. 
 2.  **Target Network** ($\theta^-$): Đánh giá giá trị của hành động đã được Policy Network chọn.
 
 > **Công thức mục tiêu của Double DQN:**
-$$\displaystyle y_{\text{target}}^{\text{DoubleDQN}} = r + \gamma Q\left(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-\right)$$
+
+$$\displaystyle y_{\text{target}}^{\text{DoubleDQN}} = r + \gamma Q\left(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-\right).$$
 
 ### Cải tiến 2: Dueling DQN
 
@@ -95,7 +98,8 @@ Kiến trúc Dueling DQN (triển khai trong `dqn.py`) chia mạng thành hai lu
 Hai luồng này được kết hợp để tạo ra Q-value cuối cùng, giúp mô hình hiểu giá trị của trạng thái mà không phụ thuộc vào hành động.
 
 > **Công thức kết hợp:**
-$$\displaystyle Q(s, a) = V(s) + \left( A(s, a) - \frac{1}{|\mathcal{A}|} \sum_{a' \in \mathcal{A}} A(s, a') \right)$$
+
+$$\displaystyle Q(s, a) = V(s) + \left( A(s, a) - \frac{1}{|\mathcal{A}|} \sum_{a' \in \mathcal{A}} A(s, a') \right).$$
 
 ### Các kỹ thuật cốt lõi khác
 
