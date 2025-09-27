@@ -84,6 +84,7 @@ DQN tiêu chuẩn có xu hướng đánh giá quá cao (overestimate) Q-values. 
 2.  **Target Network** ($\theta^-$): Đánh giá giá trị của hành động đã được Policy Network chọn.
 
 > **Công thức mục tiêu của Double DQN:**
+> y_{\text{target}}^{\text{DoubleDQN}} = r + \gamma Q\left(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-\right)
 > $$y_{\text{target}}^{\text{DoubleDQN}} = r + \gamma Q\left(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-\right)$$
 
 ### Cải tiến 2: Dueling DQN
