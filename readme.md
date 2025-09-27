@@ -104,8 +104,6 @@ Hai luồng này được kết hợp để tạo ra Q-value cuối cùng, giúp
 
 ## Kết quả
 
-*(Phần này là nơi bạn có thể thêm các biểu đồ từ TensorBoard hoặc ảnh GIF về kết quả của agent đã được huấn luyện.)*
-
 **Ví dụ: Biểu đồ phần thưởng trên CartPole-v1**
 
 ![Sample Reward Chart](runs/CartPole-v1.png)
