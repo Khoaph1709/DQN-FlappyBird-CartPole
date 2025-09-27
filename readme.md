@@ -107,8 +107,8 @@ Hai luồng này được kết hợp để tạo ra Q-value cuối cùng, giúp
 *(Phần này là nơi bạn có thể thêm các biểu đồ từ TensorBoard hoặc ảnh GIF về kết quả của agent đã được huấn luyện.)*
 
 **Ví dụ: Biểu đồ phần thưởng trên CartPole-v1**
-![Sample Reward Chart](reward_chart_placeholder.png)
-*Agent cho CartPole-v1 đạt được điểm số trung bình là 495.0 trong 100 episodes cuối cùng sau khi huấn luyện.*
+![Sample Reward Chart](runs/CartPole-v1.png)
+*Agent cho CartPole-v1 đạt được điểm số trung bình là ~2000 trong 100 episodes cuối cùng sau khi huấn luyện.*
 
 ## Cài đặt
 
