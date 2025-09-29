@@ -108,7 +108,7 @@ $$\displaystyle Q(s, a) = V(s) + \left( A(s, a) - \frac{1}{|\mathcal{A}|} \sum_{
 
 ## Kết quả
 
-**Ví dụ: Biểu đồ phần thưởng trên CartPole-v1**
+**Biểu đồ phần thưởng trên CartPole-v1**
 
 ![Sample Reward Chart](runs/CartPole-v1.png)
 
@@ -123,8 +123,8 @@ $$\displaystyle Q(s, a) = V(s) + \left( A(s, a) - \frac{1}{|\mathcal{A}|} \sum_{
 ### Hướng dẫn cài đặt
 1.  **Clone repository:**
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-folder>
+    git clone https://github.com/Khoaph1709/DQN-FlappyBird-CartPole.git
+    cd DQN-FlappyBird-CartPole
     ```
 
 2.  **Tạo và kích hoạt môi trường ảo (khuyến khích):**
